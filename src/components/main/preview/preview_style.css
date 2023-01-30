@@ -1,0 +1,7 @@
+.preview_box{
+    background-color: red;
+}
+.default-size {
+    width: 120px;
+    object-fit: contain;
+}
