@@ -5,7 +5,7 @@ function Preview(props) {
   // const logo_width = props.width_logo;
   return (
     <div className="preview_body">
-      <div className="preview_box">
+      <div className={"box-100 " + (props.bg_color.length > 0 ? ''  : 'preview_box' )} style={{backgroundColor: props.bg_color}}>
         <div className="card_header">
           <div className={"card_logo " + props.logo_alignment }>
             <img
@@ -24,7 +24,14 @@ function Preview(props) {
           </div>
         </div>
         <div className="card_body"></div>
-        <div className="card_footer"></div>
+        <div className="card_footer">
+            <ul>
+                
+                <li>
+                    name={props.ff.logo_alignment}
+                </li>
+            </ul>
+        </div>
       </div>
     </div>
   );
