@@ -5,3 +5,15 @@
     width: 120px;
     object-fit: contain;
 }
+.max-100{
+    max-width: 100%;
+}
+.end{
+ text-align: right;
+}
+.start{
+ text-align: left;
+}
+.center{
+    text-align: center;
+}
