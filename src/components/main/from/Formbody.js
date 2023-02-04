@@ -1,18 +1,29 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Preview from "../preview/Preview";
-import countrycodes from '../../../json/countrycode.json';
+import countrycodes from "../../../json/countrycode.json";
 import "./form.css";
+// import { Editor } from '@tinymce/tinymce-react';
 
 function FormBody() {
   const [cardform, setCardForm] = useState({
     bg_color: "",
+    bg_grad: false,
+    angle: "",
+    bg_grad_color_one: "",
+    percent_one: "",
+    bg_grad_color_two: "",
+    percent_two: "",
+
     email: "",
     phone: "",
     website: "",
 
     bc_app: "",
     whatsapp: "",
-    w_number:"",
+    w_number: "",
+
+    font_size: "",
+    font_color_contact: "",
 
     logo: "",
     logo_width: "",
@@ -24,6 +35,8 @@ function FormBody() {
     border_style: "",
     border_color: "",
     border_radius: "",
+
+    // editor: "",
     fname: "",
     lname: "",
   });
@@ -42,21 +55,17 @@ function FormBody() {
   };
 
   const handlecheck = (e) => {
-    setCardForm({ ...cardform, use_border: !cardform.use_border });
+    const name = e.target.name;
+    const value = e.target.checked;
+    console.log(name, value);
+    setCardForm({ ...cardform, [name]: value });
   };
 
-  // const getcountry = async (e) => {
-  //   const response = await fetch(
-  //     "../countrycode.json"
-  //   ).then((response) => response.json());
-  //     console.log(response);
-  //   setCardForm({...cardform, whatsapp : response});
-  // };
-  
+//   function handleEditorChange(e){
 
-  // useEffect(()=>{
-  //   getcountry();
-  // },[]);
+//     console.log(e.target.name)
+//     console.log(e.target.getContent())
+// }
 
   const handlesubmit = (e) => {
     console.log(cardform.fname);
@@ -70,6 +79,19 @@ function FormBody() {
             <form action="">
               <div className="row">
                 <div className="col-md-12">
+                  {/* wiswig editor  */}
+
+                  {/* <Editor 
+        apiKey="onnbypvcsxqiw7ia5pph2r3mve4v2u908450k963gbm25ezb"
+        initialValue="<p>This is the initial content of the editor</p>"
+        init={{
+            plugins: 'link image code',
+            toolbar: 'undo redo | bold italic | alignleft aligncenter alignright | code'
+          }}
+          onChange={handleEditorChange}
+          name='editor'
+        /> */}
+                  {/* wiswig editor  */}
                   {/* global section  */}
                   <fieldset className="fieldset">
                     <legend>Global</legend>
@@ -87,6 +109,113 @@ function FormBody() {
                           />
                         </div>
                       </div>
+                      <div className="col-md-3">
+                        <div className="mb-3">
+                          <label htmlFor="bg-color">Background grad</label>
+                          <input
+                            type="checkbox"
+                            name="bg_grad"
+                            id="bg-grad"
+                            className="form-check-input"
+                            value={cardform.bg_grad}
+                            onChange={handlecheck}
+                          />
+                        </div>
+                      </div>
+
+                      {function () {
+                        if (cardform.bg_grad) {
+                          return (
+                            <div className="col-md-12" id="grad-row">
+                              <div className="row">
+                                <div className="col-md-2">
+                                  <div className="mb-3">
+                                    <label htmlFor="angle-one">Angle one</label>
+                                    <div className="input-group">
+                                      <input
+                                        type="number"
+                                        name="angle"
+                                        id="angle"
+                                        className="form-control"
+                                        onChange={handleinput}
+                                        value={cardform.angle}
+                                      />
+                                      <span className="input-group-text">
+                                        deg
+                                      </span>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div className="col-md-2">
+                                  <div className="mb-3">
+                                    <label htmlFor="bg-grad-color-one">
+                                      Color one
+                                    </label>
+                                    <input
+                                      type="color"
+                                      name="bg_grad_color_one"
+                                      id="bg-grad-color-one"
+                                      className="form-control form-control-color"
+                                      value={cardform.bg_grad_color_one}
+                                      onChange={handleinput}
+                                    />
+                                  </div>
+                                </div>
+                                <div className="col-md-2">
+                                  <div className="mb-3">
+                                    <label htmlFor="percet-one">Percent</label>
+                                    <div className="input-group">
+                                      <input
+                                        type="number"
+                                        name="percent_one"
+                                        id="percent-one"
+                                        className="form-control"
+                                        onChange={handleinput}
+                                        value={cardform.percent_one}
+                                      />
+                                      <span className="input-group-text">
+                                        %
+                                      </span>
+                                    </div>
+                                  </div>
+                                </div>
+
+                                <div className="col-md-2">
+                                  <div className="mb-3">
+                                    <label htmlFor="bg-grad-color-two"></label>
+                                    <input
+                                      type="color"
+                                      name="bg_grad_color_two"
+                                      id="bg-grad-color-two"
+                                      className="form-control form-control-color"
+                                      value={cardform.bg_grad_color_two}
+                                      onChange={handleinput}
+                                    />
+                                  </div>
+                                </div>
+                                <div className="col-md-2">
+                                  <div className="mb-3">
+                                    <label htmlFor="percet-two">Percent</label>
+                                    <div className="input-group">
+                                      <input
+                                        type="number"
+                                        name="percent_two"
+                                        id="percent-two"
+                                        className="form-control"
+                                        onChange={handleinput}
+                                        value={cardform.percent_two}
+                                      />
+                                      <span className="input-group-text">
+                                        %
+                                      </span>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          );
+                        }
+                      }.call(this)}
                       <div className="col-md-12">
                         <h2 className="sub-heading">Contact Details</h2>
                         <div className="row">
@@ -156,7 +285,7 @@ function FormBody() {
                                 onChange={handleinput}
                               >
                                 <option value="">None</option>
-                                <option value="whatsapp">Whats App</option>
+                                <option value="whatsapp">WhatsApp</option>
                                 <option value="slack">Slack</option>
                                 <option value="discord">Discord</option>
                                 <option value="telegram">Telegram</option>
@@ -164,50 +293,111 @@ function FormBody() {
                             </div>
                           </div>
                           {function () {
-                            if (cardform.bc_app == "whatsapp") {
-                              return ( 
-                              <div className="col-md-12">
-                                <div className="row">
-                                  <div className="col-md-3">
-                                      <div className="bc_icon col">
-                                        <i className="fab fa-whatsapp"></i>
+                            if (cardform.bc_app === "whatsapp") {
+                              return (
+                                <div className="col-md-12">
+                                  <div className="row">
+                                    <div className="col-md-1">
+                                      <div className="bc_icon">
+                                        <div className="whatsapp_icon">
+                                          <i className="fab fa-whatsapp"></i>
+                                        </div>
                                       </div>
-                                  </div>
-                                  <div className="col-md-4">
-                                    <div className="mb-3">
-                                      <label htmlFor="whatsapp">Country Code</label>
-                                      <select name="whatsapp" id="whatsapp" className="form-control">
-                                        {
-                                        countrycodes && countrycodes.map((w) => (
-                                            <option value={w.dial_code}>{w.name}</option>
-                                          ))}
-                                      </select>
                                     </div>
-                                  </div>
-                                  <div className="col-md-4">
-                                    <div className="mb-3">
-                                        <label htmlFor="w-number">Whatsapp Number</label>
-                                        <input type="tel" name="w_number" id="w-number" className="form-control" onChange={handleinput}/>
+                                    <div className="col-md-5">
+                                      <div className="mb-3">
+                                        <label htmlFor="whatsapp">
+                                          Country Code
+                                        </label>
+                                        <select
+                                          name="whatsapp"
+                                          id="whatsapp"
+                                          className="form-select"
+                                          value={cardform.whatsapp}
+                                          onChange={handleinput}
+                                        >
+                                          <option value="">None</option>
+                                          {countrycodes &&
+                                            countrycodes.map((w) => (
+                                              <option value={w.dial_code}>
+                                                {w.name}
+                                              </option>
+                                            ))}
+                                        </select>
+                                      </div>
+                                    </div>
+                                    <div className="col-md-6">
+                                      <div className="mb-3">
+                                        <label htmlFor="w-number">
+                                          Whatsapp Number
+                                        </label>
+                                        <div className="input-group">
+                                          <span className="input-group-text">
+                                            {cardform.whatsapp
+                                              ? cardform.whatsapp
+                                              : "+91"}
+                                          </span>
+                                          <input
+                                            type="tel"
+                                            name="w_number"
+                                            id="w-number"
+                                            className="form-control"
+                                            onChange={handleinput}
+                                          />
+                                        </div>
+                                      </div>
                                     </div>
                                   </div>
                                 </div>
-                              </div>
                               );
-                            } else if (cardform.bc_app == "slack") {
-                              return ( <div className="col-md-12">
-
-                              </div>);
-                            } 
-                            else if (cardform.bc_app == "discord") {
-                              return ( <div className="col-md-12"></div>);
-                            }
-                            else if (cardform.bc_app == "discord") {
-                              return ( <div className="col-md-12"></div>);
-                            }
-                            else {
-                              return ( "" );
+                            } else if (cardform.bc_app === "slack") {
+                              return <div className="col-md-12"></div>;
+                            } else if (cardform.bc_app === "discord") {
+                              return <div className="col-md-12"></div>;
+                            } else if (cardform.bc_app === "telegram") {
+                              return <div className="col-md-12"></div>;
+                            } else {
+                              return "";
                             }
                           }.call(this)}
+
+                          <div className="col-md-6">
+                            <div className="mb-3">
+                              <label htmlFor="font-size">Icon Size</label>
+                              <div className="input-group">
+                                <input
+                                  type="range"
+                                  name="font_size"
+                                  id="font-size"
+                                  className="form-range"
+                                  value={cardform.font_size}
+                                  onChange={handleinput}
+                                />
+                                <input
+                                  type="number"
+                                  className="form-control"
+                                  value={cardform.font_size}
+                                  readOnly
+                                />
+                                <span className="input-group-text">Px</span>
+                              </div>
+                            </div>
+                          </div>
+                          <div className="col-md-6">
+                            <div className="mb-3">
+                              <label htmlFor="font-color-contact">
+                                Contact Fonts Icon
+                              </label>
+                              <input
+                                type="color"
+                                name="font_color_contact"
+                                id="font-color-contact"
+                                className="form-control form-control-color"
+                                value={cardform.font_color_contact}
+                                onChange={handleinput}
+                              />
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -342,7 +532,6 @@ function FormBody() {
                                 value={cardform.border_style}
                                 onChange={handleinput}
                               >
-
                                 <option value="">None</option>
                                 <option value="solid">Solid</option>
                                 <option value="Dashed">Dashed</option>
@@ -425,11 +614,26 @@ function FormBody() {
         </div>
         <div className="col-lg-4">
           <Preview
-            ff ={cardform}
             bg_color={cardform.bg_color}
+            //grad
+            bg_grad={cardform.bg_grad}
+            angle={cardform.angle}
+            bg_grad_color_one={cardform.bg_grad_color_one}
+            bg_grad_color_two={cardform.bg_grad_color_two}
+            percent_one={cardform.percent_one}
+            percent_two={cardform.percent_two}
+            //grad
+            // contact
             email={cardform.email}
             phone={cardform.phone}
             website={cardform.website}
+            bc_app={cardform.bc_app}
+            whatsapp_country={cardform.whatsapp}
+            whatsapp_number={cardform.w_number}
+            contact_font_size={cardform.font_size}
+            contact_font_color={cardform.font_color_contact}
+            // contact
+
             data={cardform.fname}
             logo={cardform.logo}
             logo_width={cardform.logo_width}
